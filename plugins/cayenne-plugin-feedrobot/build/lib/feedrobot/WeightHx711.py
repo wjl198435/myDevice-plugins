@@ -6,7 +6,7 @@ import RPi.GPIO as GPIO  # import GPIO
 # from hx711 import HX711  # import the class HX711
 from feedrobot.hx711 import HX711
 
-basename = '../data/'
+basename = '/etc/myDevices/plugins/data/'
 extension_name = '.swp'
 
 
@@ -149,11 +149,14 @@ class WeightHx711(object):
 if __name__ == "__main__":
 
     """ p21 p2"""
-    weight1 = WeightHx711(dout_pin=21, pd_sck_pin=20,file_name="front")
-    weight1.reCalibration()
-    print(weight1.get_weight())
+#    weight1 = WeightHx711(dout_pin=21, pd_sck_pin=20,file_name="front")
+#    weight1.reCalibration()
+#    print(weight1.get_weight())
 
     # weight2 = WeightHx711(dout_pin=23, pd_sck_pin=24, file_name="back")
     # print(weight2.get_weight())
+ 
+    foodWeight = WeightHx711(dout_pin=5, pd_sck_pin=6, file_name="food")
+    print(foodWeight.get_weight())
     GPIO.cleanup()
 

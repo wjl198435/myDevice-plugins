@@ -6,3 +6,10 @@
 # 2.sudo python3 setup.py  install
 # 3.sudo python3 __main__.py  -d
 
+## manager server
+sudo systemctl restart feedrobot.service
+sudo systemctl status feedrobot.service
+
+
+
+

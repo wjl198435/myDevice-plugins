@@ -37,8 +37,8 @@ setup(name             = 'feedrobot',
       classifiers      = classifiers,
       packages         = ['feedrobot'],
       data_files       = [('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/back.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-sensehat/data', ['data/front.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-sensehat/data', ['data/food.swp']),
+                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/front.swp']),
+                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/food.swp']),
                             ('/lib/systemd/system', ['data/feedrobot.service'])]
       )
 

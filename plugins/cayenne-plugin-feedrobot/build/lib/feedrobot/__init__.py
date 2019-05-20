@@ -10,6 +10,7 @@ from multiprocessing.managers import RemoteError
 from feedrobot.hx711 import HX711
 from feedrobot.WeightHx711 import WeightHx711
 from feedrobot.weight import Weight
+from feedrobot.manager import connect_client
 import random
 
 
@@ -18,6 +19,8 @@ class FeedRobot(object):
         self.weight = None
         self.max = 100
         self.min = 10
+
+        self.manager = connect_client()
     
     def get_body_weight(self):
         # if self.hx711 is None:

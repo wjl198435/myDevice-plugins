@@ -1,9 +1,13 @@
 setup.py
+data/back.swp
 data/feedrobot.service
+data/food.swp
+data/front.swp
 data/image.png
 feedrobot/FeedRobot.py
 feedrobot/WeightHx711.py
 feedrobot/__init__.py
+feedrobot/demo.py
 feedrobot/hx711.py
 feedrobot/manager.py
 feedrobot/startservice.py
