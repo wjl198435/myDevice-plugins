@@ -1,0 +1,10 @@
+[Unit]
+Description=Feed Robot service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -m feedrobot.startservice
+Restart=always
+
+[Install]
+WantedBy=myDevices.service

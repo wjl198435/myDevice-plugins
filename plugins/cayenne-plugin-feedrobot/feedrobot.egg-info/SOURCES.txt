@@ -1,0 +1,14 @@
+setup.py
+data/feedrobot.service
+data/image.png
+feedrobot/FeedRobot.py
+feedrobot/WeightHx711.py
+feedrobot/__init__.py
+feedrobot/hx711.py
+feedrobot/manager.py
+feedrobot/startservice.py
+feedrobot/weight.py
+feedrobot.egg-info/PKG-INFO
+feedrobot.egg-info/SOURCES.txt
+feedrobot.egg-info/dependency_links.txt
+feedrobot.egg-info/top_level.txt

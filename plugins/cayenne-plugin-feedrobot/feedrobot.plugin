@@ -1,0 +1,8 @@
+[Feed Robot  Weight]
+enabled=true
+channel=weight
+module=feedrobot
+class=FeedRobot
+read=get_body_weight
+
+

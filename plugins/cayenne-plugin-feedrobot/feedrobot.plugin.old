@@ -1,0 +1,38 @@
+[SenseHAT Temperature]
+enabled=true
+channel=0
+module=sensehat
+class=SenseHAT
+read=get_temperature
+
+[SenseHAT Humidity]
+inherit=SenseHAT Temperature
+enabled=true
+channel=1
+read=get_humidity
+
+[SenseHAT Pressure]
+inherit=SenseHAT Temperature
+enabled=true
+channel=2
+read=get_pressure
+
+[SenseHAT Accelerometer]
+inherit=SenseHAT Temperature
+enabled=true
+channel=3
+read=get_acclerometer
+
+[SenseHAT Digital Actuator]
+inherit=SenseHAT Temperature
+enabled=true
+channel=4
+read=get_digital
+write=set_digital
+
+[SenseHAT Analog Actuator]
+inherit=SenseHAT Temperature
+enabled=true
+channel=5
+read=get_analog
+write=set_analog
