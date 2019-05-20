@@ -3,21 +3,21 @@ from feedrobot.weightsensors.hx711Class import hx711Class
 from myDevices.utils.logger import error, debug
 # from feedrobot.weight_sensors.Test import Test
 
-class Food_Weight(hx711Class):
+class FoodWeightClass(hx711Class):
     def __init__(self,dout_pin=5, pd_sck_pin=6, file_name="5kg-food"):
         debug('dout_pin {0} pd_sck_pin{1} file_name {2}'.format(dout_pin,pd_sck_pin,file_name))
         hx711Class.__init__(self,dout_pin, pd_sck_pin, file_name)
     def __str__(self):
         return "Food Weight"
 
-class Head_Weight(hx711Class):
+class HeadWeightClass(hx711Class):
     def __init__(self,dout_pin=21, pd_sck_pin=20, file_name="NA4-350kg-Head"):
         debug('dout_pin {0} pd_sck_pin{1} file_name {2}'.format(dout_pin,pd_sck_pin,file_name))
         hx711Class.__init__(self,dout_pin, pd_sck_pin, file_name)
     def __str__(self):
         return "Head Weight"  
 
-class Tail_Weight(hx711Class):
+class TailWeightClass(hx711Class):
     def __init__(self,dout_pin=23, pd_sck_pin=24, file_name="NA4-350kg-Tail"):
         debug('dout_pin {0} pd_sck_pin{1} file_name {2}'.format(dout_pin,pd_sck_pin,file_name))
         hx711Class.__init__(self,dout_pin, pd_sck_pin, file_name)
@@ -65,15 +65,15 @@ class Tail_Weight(hx711Class):
 
 if __name__ == "__main__":
 
-    food_weight = Food_Weight()
+    food_weight = FoodWeightClass()
     print("body weight:",food_weight.get_weight())
 
-    head_weight = Head_Weight()
+    head_weight = HeadWeightClass()
     headWeight = head_weight.get_weight()
     print("Head weight:",headWeight)
 
 
-    tail_weight = Tail_Weight()
+    tail_weight = TailWeightClass()
     tailWeight = tail_weight.get_weight()
     print("Tail weight:",tailWeight)
     

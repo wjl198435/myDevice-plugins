@@ -3,38 +3,48 @@ This module provides a class for interfacing with the Sense HAT add-on board for
 """
 import os
 from multiprocessing.managers import RemoteError
-
-# from myDevices.utils.logger import info, debug
+import random
+from myDevices.utils.logger import error, debug,info,setInfo,setDebug
+# from myDevices.utils.logger imprt info, debug
 # from feedrobot.manager import connect_client
 # from manager import connect_client
-from feedrobot.hx711 import HX711
-from feedrobot.WeightHx711 import WeightHx711
-from feedrobot.weight import Weight
+# from feedrobot.weight import weight
+# from feedrobot.weightsensors.weight import FoodWeightClass
 from feedrobot.manager import connect_client
-import random
-
-
+from feedrobot.tempsensors.mlx90614 import MLX90614
+from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
 class FeedRobot(object):
     def __init__(self):
         self.weight = None
         self.max = 100
         self.min = 10
-
         self.manager = connect_client()
     
     def get_body_weight(self):
         # if self.hx711 is None:
         # return self.weight.get_body_weight()
         value = random.uniform(self.min, self.max) 
-       
         return (value,'weight', 'kg') 
     def test(self):
         return 100
 
 if __name__ == "__main__":
+    setDebug()
+    temp = MLX90614()
+    debug('Temp amb {} C'.format(temp.get_amb_temp()))
+    debug('Temp object {} C'.format(temp.get_obj_temp()))
 
-    fr = FeedRobot()
-    print(fr.get_body_weight())
+    dist = GP2Y0E03()
+    debug('Distance object {} mm'.format(dist.get_distance()))
+
+
+
+
+    # fwc=FoodWeightClass()
+    # print(fwc.get_weight())
+    # print('test')
+    # fr = FeedRobot()
+    # print(fr.get_body_weight())
 
 
 
