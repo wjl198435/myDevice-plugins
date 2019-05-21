@@ -9,7 +9,7 @@ from myDevices.utils.logger import error, debug,info,setInfo,setDebug
 # from feedrobot.manager import connect_client
 # from manager import connect_client
 # from feedrobot.weight import weight
-# from feedrobot.weightsensors.weight import FoodWeightClass
+from feedrobot.weightsensors.weight import FoodWeightClass,HeadWeightClass,TailWeightClass
 from feedrobot.manager import connect_client
 from feedrobot.tempsensors.mlx90614 import MLX90614
 from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
@@ -29,14 +29,28 @@ class FeedRobot(object):
         return 100
 
 if __name__ == "__main__":
-    setDebug()
-    temp = MLX90614()
-    debug('Temp amb {} C'.format(temp.get_amb_temp()))
-    debug('Temp object {} C'.format(temp.get_obj_temp()))
+    # setDebug()
+    # temp = MLX90614()
+    # debug('Temp amb {} C'.format(temp.get_amb_temp()))
+    # debug('Temp object {} C'.format(temp.get_obj_temp()))
 
-    dist = GP2Y0E03()
-    debug('Distance object {} mm'.format(dist.get_distance()))
+    # dist = GP2Y0E03()
+    # debug('Distance object {} mm'.format(dist.get_distance()))
+    
+    food_weight = FoodWeightClass()
+    print("food weight:",food_weight.get_weight())
+   
+    head_weight = HeadWeightClass()
+    headWeight = head_weight.get_weight()
+    print("Head weight:",headWeight)
 
+
+    tail_weight = TailWeightClass()
+    tailWeight = tail_weight.get_weight()
+    print("Tail weight:",tailWeight)
+    
+    total=headWeight+tailWeight
+    print('total:',total)
 
 
 
