@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 import pickle
 import os
-
 import RPi.GPIO as GPIO  # import GPIO
 # from hx711 import HX711  # import the class HX711
-from feedrobot.hx711 import HX711
+from feedrobot.weightsensors.hx711 import HX711
 
-basename = '/etc/myDevices/plugins/data/'
+basename = '/etc/myDevices/plugins/cayenne-plugin-feedrobot/data/'
 extension_name = '.swp'
 
 
-class WeightHx711(object):
+class hx711Class(object):
 
     def __init__(self, dout_pin=21, pd_sck_pin=20, file_name="front"):
         self.swap_file_name = basename+file_name+extension_name
+        print("self.swap_file_name-->",self.swap_file_name)
         self.dout_pin = dout_pin
         self.pd_sck_pin = pd_sck_pin
         try:
@@ -144,7 +144,8 @@ class WeightHx711(object):
     def close(self):
         pass
 
-
+    def __del__(self):
+        GPIO.cleanup()
 
 if __name__ == "__main__":
 
@@ -156,7 +157,7 @@ if __name__ == "__main__":
     # weight2 = WeightHx711(dout_pin=23, pd_sck_pin=24, file_name="back")
     # print(weight2.get_weight())
  
-    foodWeight = WeightHx711(dout_pin=5, pd_sck_pin=6, file_name="food")
+    foodWeight = hx711Class(dout_pin=5, pd_sck_pin=6, file_name="5kg-food")
     print(foodWeight.get_weight())
     GPIO.cleanup()
 

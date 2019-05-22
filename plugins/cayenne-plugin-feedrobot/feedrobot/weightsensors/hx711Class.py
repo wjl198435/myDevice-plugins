@@ -144,7 +144,8 @@ class hx711Class(object):
     def close(self):
         pass
 
-
+    def __del__(self):
+        GPIO.cleanup()
 
 if __name__ == "__main__":
 

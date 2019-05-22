@@ -28,17 +28,21 @@ except FileExistsError:
     pass
 
 setup(name             = 'feedrobot',
-      version          = '0.1.12',
+      version          = '0.1.15',
       author           = 'wangjinliang',
       author_email     = 'N/A',
       description      = 'myDevices Cayenne Feed Robot plugin',
       keywords         = 'myDevices IoT Cayenne Feed Robot plugin',
       url              = 'https://www.haiwar.com/',
       classifiers      = classifiers,
-      packages         = ['feedrobot'],
-      data_files       = [('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/back.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/front.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/food.swp']),
+      packages         = ['feedrobot',
+                          'feedrobot.weightsensors',
+                          'feedrobot.tempsensors',
+                          'feedrobot.distancesensors',
+                          'feedrobot.gpiosensors'],
+      data_files       = [('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Tail.swp']),
+                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Head.swp']),
+                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/5kg-food.swp']),
                             ('/lib/systemd/system', ['data/feedrobot.service'])]
       )
 

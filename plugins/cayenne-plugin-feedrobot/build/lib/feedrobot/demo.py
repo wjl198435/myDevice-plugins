@@ -1,5 +1,6 @@
 from multiprocessing.managers import BaseManager
 import random
+from feedrobot.weightsensors.test import test
 class MathsClass:
     def __init__(self):
         self.max = 100
@@ -17,7 +18,9 @@ class MyManager(BaseManager):
 MyManager.register('Maths', MathsClass)
 
 if __name__ == '__main__':
-    with MyManager() as manager:
-         maths = manager.Maths()
-         print(maths.add(4, 3))
-         print(maths.mul(7, 8))        
+    t = test()
+    print(t.add(10,20))
+    # with MyManager() as manager:
+    #      maths = manager.Maths()
+    #      print(maths.add(4, 3))
+    #      print(maths.mul(7, 8))        

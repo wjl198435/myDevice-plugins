@@ -8,8 +8,7 @@ from feedrobot.demo import MathsClass
 from feedrobot import FeedRobot
 
 SERVER_ADDRESS = ('127.0.0.1', 5600)
-AUTH_KEY = b'feedrobot'
-
+AUTH_KEY = b'abc'
 
 class FeedRobotManager(BaseManager):
     """Manager for sharing Sense HAT data between processes."""
@@ -25,7 +24,7 @@ def start_server(emulate=False):
     # ('Maths', MathsClass)
     FeedRobotManager.register('Maths', MathsClass)
     FeedRobotManager.register('FeedRobot', FeedRobot)
-    manager = FeedRobotManager(SERVER_ADDRESS, AUTH_KEY)
+    manager = FeedRobotManager(address=SERVER_ADDRESS, authkey=AUTH_KEY)
     manager.get_server().serve_forever()
 
 def connect_client():
@@ -34,8 +33,7 @@ def connect_client():
         debug('Connecting to feedrobot service')
         FeedRobotManager.register('Maths', MathsClass)
         FeedRobotManager.register('FeedRobot',FeedRobot)
-
-        manager = FeedRobotManager(SERVER_ADDRESS, AUTH_KEY)
+        manager = FeedRobotManager(address=SERVER_ADDRESS, authkey=AUTH_KEY)
         manager.connect()
         return manager
     except RemoteError as e:
@@ -43,5 +41,6 @@ def connect_client():
 
 if __name__ == "__main__":
     manager = connect_client()
-    print(manager.Maths.get_value())
-    print(manager.FeedRobot)
+    # print(manager.Maths.get_value())
+    # print(manager.FeedRobot)
+
