@@ -165,7 +165,7 @@ class SensorsClientTest(unittest.TestCase):
 
     def testRomoveSensor(self):
         info('testRomoveSensor')
-        name = "test_light_switch"
+        name = "enter_door_relay"
         self.assertTrue(SensorsClientTest.client.RemoveSensor(name))
 
     def testListSensors(self):
@@ -178,15 +178,19 @@ class SensorsClientTest(unittest.TestCase):
         info("actuator_channel {}".format(enter_door_channel))
         exit_door_channel = 19
         info("light_switch_channel {}".format(exit_door_channel))
-        sensors = {'actuator' : {'description': 'Enter  Door', 'device': 'DigitalActuator', 'args': {'gpio': 'GPIO', 'invert': False, 'channel': enter_door_channel}, 'name': 'enter_door_relay'},
-                   'light_switch' : {'description': 'Exit  Door', 'device': 'LightSwitch', 'args': {'gpio': 'GPIO', 'invert': False, 'channel': exit_door_channel}, 'name': 'exit_door_relay'}
+        self.sensors = {'enter_door_switch' : {'description': 'Enter  Door', 'device': 'RelaySwitch', 'args': {'gpio': 'GPIO', 'invert': False, 'channel': enter_door_channel}, 'name': 'enter_door_relay'},
+                   'exit_door_switch' : {'description': 'Exit  Door', 'device': 'RelaySwitch', 'args': {'gpio': 'GPIO', 'invert': False, 'channel': exit_door_channel}, 'name': 'exit_door_relay'},
+                #    'bucket_power_switch' : {'description': 'Bucket Power', 'device': 'MotorSwitch', 'args': {'gpio': 'GPIO', 'invert': False, 'channel': bucket_power_channel}, 'name': 'bucket_power_relay'},
+
                 #    'MCP3004' : {'description': 'MCP3004', 'device': 'MCP3004', 'args': {'chip': '0'}, 'name': 'test_MCP3004'},
                 #    'distance' : {'description': 'Analog Distance Sensor', 'device': 'DistanceSensor', 'args': {'adc': 'test_MCP3004', 'channel': 0}, 'name': 'test_distance'}
                   }
+        sensors = self.sensors          
         for sensor in sensors.values():
             SensorsClientTest.client.AddSensor(sensor['name'], sensor['description'], sensor['device'], sensor['args'])
         # SensorsClientTest.client.SensorsInfo()
-
+    def testSetGPIOValue(self):
+        
 
 if __name__ == '__main__':
     setInfo()
@@ -195,7 +199,7 @@ if __name__ == '__main__':
     # SensorsClientTest("testBusInfo"),
     # SensorsClientTest("testSensorsInfo"),
     SensorsClientTest("testAddSensors"),
-    SensorsClientTest("testListSensors")
+    # SensorsClientTest("testListSensors")
     # SensorsClientTest("testRomoveSensor")
    
     ]

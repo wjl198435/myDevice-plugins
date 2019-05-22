@@ -1,0 +1,15 @@
+switch log
+
+2019-05-22 15:53:24 - myDevices - INFO - OnMessage: {'payload': '1', 'channel': 'dev:enter_door_relay', 'cmdId': 'LJpErJCrCLxvLKG'}
+2019-05-22 15:53:24 - myDevices - INFO - ExecuteMessage: {'payload': '1', 'channel': 'dev:enter_door_relay', 'cmdId': 'LJpErJCrCLxvLKG'}
+2019-05-22 15:53:24 - myDevices - INFO - SensorCommand: value, sensor enter_door_relay, channel None, value 1
+2019-05-22 15:53:24 - myDevices - INFO - Checking for enter_door_relay in dict_keys(['feedrobot:weight', 'example_device:0'])
+2019-05-22 15:53:24 - myDevices - INFO - Sensor found: {'status': 1, 'functions': {'POST': {}, 'GET': {}}, 'class': 'DigitalActuator', 'device': <helper.DigitalActuator object at 0x7467d1f0>, 'type': ['DigitalActuator'], 'description': 'Enter  Door', 'origin': 'rest', 'args': {'invert': False, 'channel': 13, 'last_state': 0, 'gpio': 'GPIO'}}
+2019-05-22 15:53:24 - myDevices - INFO - Saving state 1 for device enter_door_relay
+2019-05-22 15:53:24 - myDevices - INFO - ok,LJpErJCrCLxvLKG
+2019-05-22 15:53:25 - myDevices - INFO - Sensors info: [{'unit': 'd', 'name': 'Enter  Door', 'channel': 'dev:enter_door_relay', 'type': 'digital_actuator', 'value': 1}, {'unit': 'd', 'name': 'Exit  Door', 'channel': 'dev:exit_door_relay', 'type': 'digital_actuator', 'value': 0}]
+2019-05-22 15:53:26 - myDevices - INFO - Send changed data: [{'sys:cpu;load': 9.7}, {'sys:cpu;temp': 51.54}, {'sys:ram;usage': 449081344}, {'sys:storage:/;usage': 8480194560}, {'sys:net;speedtest': 1.290026706777897}, {'dev:enter_door_relay': 1}, {'dev:feedrobot:weight': 20.43862838072525}, {'dev:example_device:0': 38.618579066697365}, {'sys:gpio:13;value': 1}]
+^C2019-05-22 15:53:33 - myDevices - INFO - Program interrupt received, client exiting
+2019-05-22 15:53:33 - myDevices - INFO - Shutting down client
+2019-05-22 15:53:33 - myDevices - INFO - myDevices cloud disconnected
+2019-05-22 15:53:33 - myDevices - INFO - Client shut down
