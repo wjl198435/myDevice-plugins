@@ -198,11 +198,8 @@ class SensorsClientTest(unittest.TestCase):
             SensorsClientTest.client.AddSensor(sensor['name'], sensor['description'], sensor['device'], sensor['args'])
         # SensorsClientTest.client.SensorsInfo()
     def testSetGPIOValue(self):
-        info('testSetGPIOValue')
         for sensor in SensorsClientTest.sensors.values():
-            # info("sensor channel:".format(sensor['channel']))
-            info(sensor)
-            info(sensor['args']['channel'])
+            info("sensor channel:".format(sensor['channel']))
 
 
 

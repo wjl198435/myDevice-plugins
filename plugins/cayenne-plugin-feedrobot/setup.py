@@ -40,9 +40,10 @@ setup(name             = 'feedrobot',
                           'feedrobot.tempsensors',
                           'feedrobot.distancesensors',
                           'feedrobot.gpiosensors'],
-      data_files       = [('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Tail.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Head.swp']),
-                          ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/5kg-food.swp']),
+      data_files       = [
+                        #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Tail.swp']),
+                        #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Head.swp']),
+                        #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/5kg-food.swp']),
                             ('/lib/systemd/system', ['data/feedrobot.service'])]
       )
 

@@ -1,16 +1,32 @@
 # #### CONFIG ####
-##### weight sensors config ######
-CONF_WEIGHT_HEAD_GPIO_DO = 5
-CONF_WEIGHT_HEAD_GPIO_CK = 6
+##### Feed Robot weight sensors(称重传感器) config ######
+CONF_WEIGHT_HEAD_GPIO_DO = 21
+CONF_WEIGHT_HEAD_GPIO_CK = 20
 CONF_WEIGHT_HEAD_SWAP_FILE = "NA4-350kg-Head"
 
 CONF_WEIGHT_TAIL_GPIO_DO = 23
 CONF_WEIGHT_TAIL_GPIO_CK = 24
 CONF_WEIGHT_TAIL_SWAP_FILE = "NA4-350kg-Tail"
 
-CONF_WEIGHT_FOOD_GPIO_DO = 21
-CONF_WEIGHT_FOOD_GPIO_CK = 20
+CONF_WEIGHT_FOOD_GPIO_DO = 5
+CONF_WEIGHT_FOOD_GPIO_CK = 6
 CONF_WEIGHT_FOOD_SWAP_FILE = "5kg-food"
+
+
+###### Feed Robot Door Switch(电磁门开关控制) #######
+CONF_DOOR_ENTER_GPIO = 13
+CONF_DOOR_EXIT_GPIO = 19
+
+
+######## bucket motor (饲料桶) 电机控制 ###########
+CONF_BUCKET_POWER_GPIO = 0
+CONF_BUCKET_FORWARD_GPIO = 0
+CONF_BUCKET_REVERSE_GPIO =   0
+
+
+
+
+
 
 
 

@@ -13,6 +13,7 @@ feedrobot.egg-info/top_level.txt
 feedrobot/distancesensors/__init__.py
 feedrobot/distancesensors/gp2y0e03.py
 feedrobot/gpiosensors/__init__.py
+feedrobot/gpiosensors/test_gpio_sensors.py
 feedrobot/tempsensors/__init__.py
 feedrobot/tempsensors/mlx90614.py
 feedrobot/weightsensors/__init__.py
