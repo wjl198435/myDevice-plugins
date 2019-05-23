@@ -1,5 +1,7 @@
 from myDevices.utils.logger import error, debug,info,setInfo,setDebug
 from feedrobot.weightsensors.weight import (FoodWeightClass,HeadWeightClass,TailWeightClass)
+class FeedRobot(object):
+    
 # class SenseHat(object):
 #     def __init__(self):
 #         self._food_weight = FoodWeightClass()
