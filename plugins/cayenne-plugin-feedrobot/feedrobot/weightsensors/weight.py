@@ -31,9 +31,9 @@ class TailWeightClass(hx711Class):
         return "Tail Weight"          
 
 if __name__ == "__main__":
-    # setDebug()
-    # food_weight = FoodWeightClass()
-    # print("food weight:",food_weight.get_weight())
+    setDebug()
+    food_weight = FoodWeightClass()
+    print("food weight:",food_weight.get_weight())
 
     # head_weight = HeadWeightClass()
     # headWeight = head_weight.get_weight()

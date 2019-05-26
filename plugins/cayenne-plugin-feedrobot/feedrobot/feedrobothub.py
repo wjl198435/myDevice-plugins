@@ -4,6 +4,11 @@ from myDevices.utils.logger import error, debug,info,setInfo,setDebug
 from feedrobot.weightsensors.weight import (FoodWeightClass,HeadWeightClass,TailWeightClass)
 from feedrobot.tempsensors.mlx90614  import MLX90614
 from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
+from myDevices.devices.digital.gpio import NativeGPIO
+
+from feedrobot.config import (CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_ENTER_STATUS_GPIO,
+                              CONF_DOOR_EXIT_SWITCH_GPIO,CONF_DOOR_EXIT_STATUS_GPIO,
+                              CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO)
 
 SUPPORT_FOOD_WEIGHT = 1
 SUPPORT_HEAD_WEIGHT = 2
@@ -19,6 +24,9 @@ SUPPORT_STATUS = 128
 # SUPPORT_MAP = 2048
 # SUPPORT_STATE = 4096
 # SUPPORT_START = 8192
+
+
+
 SUPPORT_FEED_ROBOT = SUPPORT_FOOD_WEIGHT | SUPPORT_HEAD_WEIGHT | SUPPORT_TAIL_WEIGHT \
                     | SUPPORT_DOOR_SWITCH | SUPPORT_TEMPERATURE | SUPPORT_DISTANCE \
                     | SUPPORT_DC_MOTOR | SUPPORT_STATUS    
@@ -45,6 +53,11 @@ class FeedRobotHub(object):
         self._body_dist = None  # Will be initialised as and when needed
         self._body_dist_init= False
 
+        # self.gpio = NativeGPIO()
+        self._gpio = None
+        self._gpio_init = False
+        self.callback_data = 0
+
     def support(self):
         return SUPPORT_FEED_ROBOT
    
@@ -63,9 +76,10 @@ class FeedRobotHub(object):
         debug("get_food_weight ")
         self._init_food_weight()
         if self._food_weight_init:
-            return self._food_weight.get_weight()
+            value = self._food_weight.get_weight()
+            return (0, "OK", value)
         else:
-            return -1    
+            return {-1,'error', 'Sensor Init error'}  
 
 
     def _init_body_weight(self):
@@ -88,9 +102,9 @@ class FeedRobotHub(object):
             _tail_body_weight = self._tail_body_weight.get_weight()
             total_body_weight = _head_body_weight + _tail_body_weight
             debug("total_body_weight:{0}g head_body_weight:{1}g tail_body_weight:{2}g".format(total_body_weight,_head_body_weight,total_body_weight))
-            return (total_body_weight)
+            return (0, "OK", total_body_weight)
         else :
-            return -1    
+            return {-1,'error', 'Sensor Init error'} 
 
     def _init_ir_temp(self):
         debug("_init_ir_temp ")
@@ -108,17 +122,19 @@ class FeedRobotHub(object):
         debug("get_ir_body_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            return self._ir_temp.get_obj_temp()
+            value = self._ir_temp.get_obj_temp()
+            return  (0, "OK", value)
         else:
-            return -100    
+            return (-1,'error','device init error')   
 
     def get_ir_amb_temp(self):
         debug("get_ir_amb_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            return self._ir_temp.get_amb_temp()
+            value = self._ir_temp.get_amb_temp()
+            return (0, "OK", value)
         else:
-            return -100  
+            return (-1,'error','device init error')  
 
     def _init__body_dist(self):
         debug("_init_food_weight ")
@@ -135,19 +151,63 @@ class FeedRobotHub(object):
         debug("get_food_weight ")
         self._init__body_dist()
         if self._body_dist_init:
-            return self._body_dist.get_distance()
+            value = self._body_dist.get_distance()
+            return  (0, "OK", value)
         else:
-            return -1            
-        
+            return  (-1,'error','device init error')   
+    
+    def edgeCallback(self, data, value):
+        info('edgeCallback data {}, value {}'.format(data, value))
+        self.callback_data = data
 
+    def _initStatusCallback(self): 
+        debug("_initStatusCallback ")
+        pins_status_list = [CONF_DOOR_ENTER_STATUS_GPIO,CONF_DOOR_EXIT_STATUS_GPIO]
+        for pin in pins_status_list:
+            self.gpio.setFunctionString(pin, 'IN')
+            self.gpio.setCallback(pin, self.edgeCallback, pin)
+            
+    def init_gpio(self):
+        debug("_init_gpio ")
+        if not self._gpio_init:
+            self.gpio = NativeGPIO()
+            self._initStatusCallback()
+            self._gpio_init = True
+           
+            pins_out_list = [CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_EXIT_SWITCH_GPIO,
+            CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO]
+            
+            for pin in pins_out_list:
+                function = self.gpio.setFunctionString(pin, 'OUT') 
+                if function == 'UNKNOWN':
+                    error('Pin {} function UNKNOWN, skipping'.format(pin))  
+        info("success init gpio")         
+
+
+    def digitalWrite(self,channel, value):
+        if not self._gpio_init:
+            
+            self.gpio_init = True  
+        # function = self.gpio.setFunctionString(pin, 'OUT')              
+        
 if __name__ == "__main__":
     setDebug()
     frh=FeedRobotHub()
-    debug("food weight {0} g".format(frh.get_food_weight()))
-    debug("body weight {0} g".format(frh.get_body_weight()))
+    # debug("food weight {0} g".format(frh.get_food_weight()))
+    # debug("body weight {0} g".format(frh.get_body_weight()))
    
-    debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
-    debug("ir_body_temp:{}C".format(frh.get_ir_body_temp()))
+    # debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
+    # debug("ir_body_temp:{}C".format(frh.get_ir_body_temp()))
 
-    debug("get_body_dist:{} mm".format(frh.get_body_dist()))
+    # debug("get_body_dist:{} mm".format(frh.get_body_dist()))
+    # gpio_out_list = [CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_EXIT_SWITCH_GPIO,
+    # CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO]
+
+    # gpio_status_list = [CONF_DOOR_ENTER_STATUS_GPIO,CONF_DOOR_EXIT_STATUS_GPIO]
+    # for gpio in gpio_out_list:
+    #     info(gpio)
+    # for gpio in gpio_status_list:
+    #     info(gpio)    
+    frh.init_gpio()
+   
  
