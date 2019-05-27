@@ -84,7 +84,7 @@ class hx711Class(object):
 
         except (KeyboardInterrupt, SystemExit):
             print('Bye :)')
-            return None
+        return None
 
     def reCalibration(self, known_weight_grams=10):
         err = self.hx.zero()

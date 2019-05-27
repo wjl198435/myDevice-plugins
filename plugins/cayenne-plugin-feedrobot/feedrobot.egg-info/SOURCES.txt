@@ -1,9 +1,9 @@
 setup.py
 data/feedrobot.service
-feedrobot/FeedRobot.py
 feedrobot/__init__.py
 feedrobot/config.py
 feedrobot/demo.py
+feedrobot/feedrobothub.py
 feedrobot/manager.py
 feedrobot/startservice.py
 feedrobot.egg-info/PKG-INFO
@@ -13,6 +13,8 @@ feedrobot.egg-info/top_level.txt
 feedrobot/distancesensors/__init__.py
 feedrobot/distancesensors/gp2y0e03.py
 feedrobot/gpiosensors/__init__.py
+feedrobot/gpiosensors/gpiosensors.py
+feedrobot/gpiosensors/test_gpio.py
 feedrobot/gpiosensors/test_gpio_sensors.py
 feedrobot/tempsensors/__init__.py
 feedrobot/tempsensors/mlx90614.py
