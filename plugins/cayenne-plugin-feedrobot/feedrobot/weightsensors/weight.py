@@ -32,16 +32,16 @@ class TailWeightClass(hx711Class):
 
 if __name__ == "__main__":
     setDebug()
-    food_weight = FoodWeightClass()
-    print("food weight:",food_weight.get_weight())
+    # food_weight = FoodWeightClass()
+    # print("food weight:",food_weight.get_weight())
 
     # head_weight = HeadWeightClass()
     # headWeight = head_weight.get_weight()
     # print("Head weight:",headWeight)
 
-    # tail_weight = TailWeightClass()
-    # tailWeight = tail_weight.get_weight()
-    # print("Tail weight:",tailWeight)
+    tail_weight = TailWeightClass()
+    tailWeight = tail_weight.get_weight()
+    print("Tail weight:",tailWeight)
     
     # total=headWeight+tailWeight
     # print('total:',total)

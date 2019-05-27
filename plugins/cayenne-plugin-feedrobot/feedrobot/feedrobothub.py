@@ -122,8 +122,7 @@ class FeedRobotHub(object):
         debug("get_ir_body_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            value = self._ir_temp.get_obj_temp()
-            return  (0, "OK", value)
+            return  (0, "OK", self._ir_temp.get_obj_temp())
         else:
             return (-1,'error','device init error')   
 
@@ -131,8 +130,7 @@ class FeedRobotHub(object):
         debug("get_ir_amb_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            value = self._ir_temp.get_amb_temp()
-            return (0, "OK", value)
+            return (0, "OK",  self._ir_temp.get_amb_temp())
         else:
             return (-1,'error','device init error')  
 
@@ -171,24 +169,40 @@ class FeedRobotHub(object):
         debug("_init_gpio ")
         if not self._gpio_init:
             self.gpio = NativeGPIO()
-            self._initStatusCallback()
             self._gpio_init = True
+            # self._initStatusCallback()
+            # self._gpio_init = True
            
-            pins_out_list = [CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_EXIT_SWITCH_GPIO,
-            CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO]
+            # pins_out_list = [CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_EXIT_SWITCH_GPIO,
+            # CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO]
             
-            for pin in pins_out_list:
-                function = self.gpio.setFunctionString(pin, 'OUT') 
-                if function == 'UNKNOWN':
-                    error('Pin {} function UNKNOWN, skipping'.format(pin))  
+            # for pin in pins_out_list:
+            #     function = self.gpio.setFunctionString(pin, 'OUT') 
+            #     if function == 'UNKNOWN':
+            #         error('Pin {} function UNKNOWN, skipping'.format(pin))  
         info("success init gpio")         
 
 
     def digitalWrite(self,channel, value):
+        debug("_init_gpio channel:{0}, value:{1} ".format(channel, value))
         if not self._gpio_init:
-            
-            self.gpio_init = True  
-        # function = self.gpio.setFunctionString(pin, 'OUT')              
+            self.init_gpio()
+        try:
+            function = self.gpio.setFunctionString(channel, 'OUT')   
+            debug("setFunctionString:{0},function:{1}".format(channel,function))
+        
+            pin_value = self.gpio.digitalWrite(channel, value) 
+            debug("pin_value:{}".format(pin_value))
+        
+            if pin_value  == value:
+                return  (0, "OK", value)
+            else:
+                return  (-1, "error", value)  
+        except ValueError as ve:
+            return  (-1, "error", value)  
+
+
+       
         
 if __name__ == "__main__":
     setDebug()
@@ -196,7 +210,7 @@ if __name__ == "__main__":
     # debug("food weight {0} g".format(frh.get_food_weight()))
     # debug("body weight {0} g".format(frh.get_body_weight()))
    
-    # debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
+    debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
     # debug("ir_body_temp:{}C".format(frh.get_ir_body_temp()))
 
     # debug("get_body_dist:{} mm".format(frh.get_body_dist()))
@@ -208,6 +222,7 @@ if __name__ == "__main__":
     #     info(gpio)
     # for gpio in gpio_status_list:
     #     info(gpio)    
-    frh.init_gpio()
+    # frh.init_gpio()
+    # debug(":digitalWrite {}".format(frh.digitalWrite(27,0)))
    
  

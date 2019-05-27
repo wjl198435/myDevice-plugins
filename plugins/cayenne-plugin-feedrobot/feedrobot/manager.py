@@ -3,9 +3,10 @@ This module provides a functions for starting and connecting to a Sense HAT serv
 as root to use the sense_hat module, while allowing clients that are not running as root to access Sense HAT data.
 """
 from multiprocessing.managers import BaseManager, RemoteError
-from myDevices.utils.logger import error, debug
+from myDevices.utils.logger import error, debug,info,setInfo,setDebug
+
 from feedrobot.demo import MathsClass
-from feedrobot import FeedRobot
+from feedrobothub import FeedRobotHub
 
 SERVER_ADDRESS = ('127.0.0.1', 5600)
 AUTH_KEY = b'abc'
@@ -22,8 +23,9 @@ def start_server(emulate=False):
     """
     # SenseHATManager.register('SenseHat', SenseHat)
     # ('Maths', MathsClass)
+    debug('start_server')
     FeedRobotManager.register('Maths', MathsClass)
-    FeedRobotManager.register('FeedRobot', FeedRobot)
+    FeedRobotManager.register('FeedRobotHub', FeedRobotHub)
     manager = FeedRobotManager(address=SERVER_ADDRESS, authkey=AUTH_KEY)
     manager.get_server().serve_forever()
 
@@ -32,7 +34,7 @@ def connect_client():
     try:
         debug('Connecting to feedrobot service')
         FeedRobotManager.register('Maths', MathsClass)
-        FeedRobotManager.register('FeedRobot',FeedRobot)
+        FeedRobotManager.register('FeedRobotHub',FeedRobotHub)
         manager = FeedRobotManager(address=SERVER_ADDRESS, authkey=AUTH_KEY)
         manager.connect()
         return manager
@@ -40,7 +42,17 @@ def connect_client():
         error('Error connecting to feedrobot service, if using the Sense HAT emulator make sure it is has been launched in the GUI')
 
 if __name__ == "__main__":
+    setDebug()
     manager = connect_client()
-    # print(manager.Maths.get_value())
-    # print(manager.FeedRobot)
+    # manager.FeedRobotHub.digitalWrite(26,0)
+    # print(manager.Maths().get_value())
+    # print(manager.FeedRobotHub().digitalWrite(26,1))
+    # feed_robot = manager.FeedRobotHub()
+    debug("Sensor body temp:{}".format(manager.FeedRobotHub().get_ir_body_temp()))
+    debug("Sensor amb temp:{}".format(manager.FeedRobotHub().get_ir_amb_temp()))
+    debug("Sensor food weight:{}".format(manager.FeedRobotHub().get_food_weight()))
+    debug("Sensor body weight:{}".format(manager.FeedRobotHub().get_body_weight()))
+    
+    # feed_robot.get_ir_body_temp()
+    # debug(feed_robot.get_ir_body_temp())
 
