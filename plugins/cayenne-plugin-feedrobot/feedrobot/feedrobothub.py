@@ -10,6 +10,9 @@ from feedrobot.config import (CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_ENTER_STATUS
                               CONF_DOOR_EXIT_SWITCH_GPIO,CONF_DOOR_EXIT_STATUS_GPIO,
                               CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO)
 
+
+                             
+
 SUPPORT_FOOD_WEIGHT = 1
 SUPPORT_HEAD_WEIGHT = 2
 SUPPORT_TAIL_WEIGHT = 4
