@@ -13,6 +13,7 @@ class HX711:
     """
     HX711 represents chip for reading load cells.
     """
+   
 
     def __init__(self,
                  dout_pin,

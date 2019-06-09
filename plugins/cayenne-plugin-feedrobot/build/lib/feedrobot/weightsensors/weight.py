@@ -49,8 +49,8 @@ class BodyWeightClass(hx711Class):
 
 if __name__ == "__main__":
     setDebug()
-    # food_weight = FoodWeightClass()
-    # print("food weight:",food_weight.get_weight())
+    food_weight = FoodWeightClass()
+    print("food weight:",food_weight.get_weight())
 
     # head_weight = HeadWeightClass()
     # headWeight = head_weight.get_weight()
@@ -63,9 +63,9 @@ if __name__ == "__main__":
     # total=headWeight+tailWeight
     # print('total:',total)
    
-    body_weight = Body_WeightClass()
-    bodyweight = body_weight.get_weight()
-    print("Body weight:",bodyweight)
+    # body_weight = BodyWeightClass()
+    # bodyweight = body_weight.get_weight()
+    # print("Body weight:",bodyweight)
 
     
 

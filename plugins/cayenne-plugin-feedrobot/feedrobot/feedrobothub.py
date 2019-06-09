@@ -6,6 +6,8 @@ from feedrobot.tempsensors.mlx90614  import MLX90614
 from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
 from myDevices.devices.digital.gpio import NativeGPIO
 
+import RPi.GPIO as GPIO
+
 from feedrobot.config import (CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_ENTER_STATUS_GPIO,
                               CONF_DOOR_EXIT_SWITCH_GPIO,CONF_DOOR_EXIT_STATUS_GPIO,
                               CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO)
@@ -212,6 +214,7 @@ class FeedRobotHub(object):
         cond_status = ConditionStatus()
         cond_status.temperature = self.get_ir_amb_temp()
         cond_status.food_weight =  self.get_food_weight()
+     
         return cond_status
 
 
@@ -221,7 +224,7 @@ class FeedRobotHub(object):
         body_status.body_distance = self.get_body_dist()
         body_status.body_weight = self.get_body_weight()
         body_status.temperature = self.get_ir_body_temp()
-        
+       
         return body_status
 
        

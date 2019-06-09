@@ -139,13 +139,13 @@ class hx711Class(object):
 
     def get_weight(self):
          weight = round(abs(self.hx.get_weight_mean(20)), 2)
+         GPIO.cleanup()
          return weight
 
     def close(self):
         pass
 
-    def __del__(self):
-        GPIO.cleanup()
+
 
 if __name__ == "__main__":
 
