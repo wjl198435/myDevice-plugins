@@ -10,7 +10,7 @@ from feedrobot.demo import MathsClass
 from feedrobothub import FeedRobotHub
 from myDevices.system.systeminfo import SystemInfo
 
-SERVER_ADDRESS = ('127.0.0.1', 5600)
+SERVER_ADDRESS = ('0.0.0.0', 5600)
 AUTH_KEY = b'abc'
 
 class FeedRobotManager(BaseManager):
@@ -65,8 +65,8 @@ if __name__ == "__main__":
 
     systemInfo = manager.SystemInfo()
     debug("SystemInfo:{}".format(hardware.getMac()))
-    self.info = {item['channel']:item for item in systemInfo.getSystemInformation()}
-    info(self.info)
+    sysInfo = {item['channel']:item for item in systemInfo.getSystemInformation()}
+    info(sysInfo)
     # debug("Sensor body weight:{}".format(hardware.getMac()))
     
     # feed_robot.get_ir_body_temp()

@@ -6,6 +6,7 @@ feedrobot/demo.py
 feedrobot/feedrobothub.py
 feedrobot/manager.py
 feedrobot/startservice.py
+feedrobot/testManager.py
 feedrobot.egg-info/PKG-INFO
 feedrobot.egg-info/SOURCES.txt
 feedrobot.egg-info/dependency_links.txt

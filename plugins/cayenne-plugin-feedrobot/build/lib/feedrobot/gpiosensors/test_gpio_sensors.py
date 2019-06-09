@@ -14,6 +14,8 @@ from json import loads, dumps
 from feedrobot.config import (CONF_DOOR_ENTER_GPIO,CONF_DOOR_EXIT_GPIO)
 
 
+
+
 class SensorsClientTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -53,6 +55,9 @@ class SensorsClientTest(unittest.TestCase):
                 break
         info('Changed items: {}'.format([x for x in self.currentSystemData if x not in self.previousSystemData]))
         self.assertNotEqual(self.previousSystemData, self.currentSystemData)
+
+    
+
 
     def testBusInfo(self):
         debug('testBusInfo')

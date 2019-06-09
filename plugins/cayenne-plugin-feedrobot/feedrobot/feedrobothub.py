@@ -1,7 +1,7 @@
 import traceback
 import sys
 from myDevices.utils.logger import error, debug,info,setInfo,setDebug
-from feedrobot.weightsensors.weight import (FoodWeightClass,HeadWeightClass,TailWeightClass)
+from feedrobot.weightsensors.weight import (FoodWeightClass,HeadWeightClass,TailWeightClass,BodyWeightClass)
 from feedrobot.tempsensors.mlx90614  import MLX90614
 from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
 from myDevices.devices.digital.gpio import NativeGPIO
@@ -92,8 +92,9 @@ class FeedRobotHub(object):
         """
         if not self._body_weight_init:
             try:
-                self._head_body_weight = HeadWeightClass()
-                self._tail_body_weight = TailWeightClass()
+                # self._head_body_weight = HeadWeightClass()
+                # self._tail_body_weight = TailWeightClass()
+                self._body_weight = BodyWeightClass()
                 self._body_weight_init = True
             except:
                 error(traceback.print_exc())
@@ -101,10 +102,11 @@ class FeedRobotHub(object):
         debug("get_body_weight ")
         self._init_body_weight()
         if self._body_weight_init:
-            _head_body_weight = self._head_body_weight.get_weight()
-            _tail_body_weight = self._tail_body_weight.get_weight()
-            total_body_weight = _head_body_weight + _tail_body_weight
-            debug("total_body_weight:{0}g head_body_weight:{1}g tail_body_weight:{2}g".format(total_body_weight,_head_body_weight,total_body_weight))
+            # _head_body_weight = self._head_body_weight.get_weight()
+            # _tail_body_weight = self._tail_body_weight.get_weight()
+            # total_body_weight = _head_body_weight + _tail_body_weight
+            total_body_weight = self._body_weight.get_weight()
+            debug("total_body_weight:{0}g".format(total_body_weight))
             return (0, "OK", total_body_weight)
         else :
             return {-1,'error', 'Sensor Init error'} 
@@ -202,7 +204,51 @@ class FeedRobotHub(object):
             else:
                 return  (-1, "error", value)  
         except ValueError as ve:
-            return  (-1, "error", value)  
+            return  (-1, "error", value) 
+
+    def get_condition_status(self):
+        debug("get_amb_statu")
+        
+        cond_status = ConditionStatus()
+        cond_status.temperature = self.get_ir_amb_temp()
+        cond_status.food_weight =  self.get_food_weight()
+        return cond_status
+
+
+    def get_body_status(self):
+        debug("get_body_status")
+        body_status = BodyStatus()
+        body_status.body_distance = self.get_body_dist()
+        body_status.body_weight = self.get_body_weight()
+        body_status.temperature = self.get_ir_body_temp()
+        
+        return body_status
+
+       
+    
+class ConditionStatus(object):
+    def __init__(self):
+        self.temperature = 0
+        self.food_weight = 0
+    def __str__(self) -> str:
+        """Represent body as string."""
+        return ":temperature:{},food_weight:{}".format(self.temperature, self.food_weight)
+
+
+    
+
+class BodyStatus(object):
+    def __init__(self):
+        self.temperature = 0
+        self.body_weight = 0
+        self.body_distance= 0
+    def __str__(self) -> str:
+        """Represent body as string."""
+        return ":temperature:{}, body_weight:{},body_distance:{}".format(self.temperature, self.body_weight,self.body_distance )
+
+
+
+
 
 
        
@@ -210,10 +256,13 @@ class FeedRobotHub(object):
 if __name__ == "__main__":
     setDebug()
     frh=FeedRobotHub()
+    debug("body status{}".format(frh.get_condition_status()))
+    debug("body status{}".format(frh.get_body_status()))
+    # frh.get_body_status
     # debug("food weight {0} g".format(frh.get_food_weight()))
     # debug("body weight {0} g".format(frh.get_body_weight()))
    
-    debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
+    # debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
     # debug("ir_body_temp:{}C".format(frh.get_ir_body_temp()))
 
     # debug("get_body_dist:{} mm".format(frh.get_body_dist()))
