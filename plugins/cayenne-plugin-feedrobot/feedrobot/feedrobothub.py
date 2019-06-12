@@ -34,7 +34,30 @@ SUPPORT_STATUS = 128
 
 SUPPORT_FEED_ROBOT = SUPPORT_FOOD_WEIGHT | SUPPORT_HEAD_WEIGHT | SUPPORT_TAIL_WEIGHT \
                     | SUPPORT_DOOR_SWITCH | SUPPORT_TEMPERATURE | SUPPORT_DISTANCE \
-                    | SUPPORT_DC_MOTOR | SUPPORT_STATUS    
+                    | SUPPORT_DC_MOTOR | SUPPORT_STATUS
+
+OK = 'ok'
+DATA = 'data'
+
+class ConditionStatus(object):
+    def __init__(self):
+        self.temperature = 0
+        self.food_weight = 0
+    def __str__(self) -> str:
+        """Represent body as string."""
+        return ":temperature:{},food_weight:{}".format(self.temperature, self.food_weight)
+
+
+    
+
+class HealthStatus(object):
+    def __init__(self):
+        self.temperature = 0
+        self.body_weight = 0
+        self.body_distance= 0
+    def __str__(self) -> str:
+        """Represent body as string."""
+        return ":temperature:{}, body_weight:{},body_distance:{}".format(self.temperature, self.body_weight,self.body_distance )
 
 
 
@@ -82,9 +105,9 @@ class FeedRobotHub(object):
         self._init_food_weight()
         if self._food_weight_init:
             value = self._food_weight.get_weight()
-            return (0, "OK", value)
+            return {OK: 0, DATA: value}
         else:
-            return {-1,'error', 'Sensor Init error'}  
+            return {OK: -1, DATA: 'error:Sensor Init error'}
 
 
     def _init_body_weight(self):
@@ -109,9 +132,9 @@ class FeedRobotHub(object):
             # total_body_weight = _head_body_weight + _tail_body_weight
             total_body_weight = self._body_weight.get_weight()
             debug("total_body_weight:{0}g".format(total_body_weight))
-            return (0, "OK", total_body_weight)
+            return {OK: 0, DATA: total_body_weight}
         else :
-            return {-1,'error', 'Sensor Init error'} 
+            return {OK: -1, DATA: 'error:Sensor Init error'}
 
     def _init_ir_temp(self):
         debug("_init_ir_temp ")
@@ -129,17 +152,17 @@ class FeedRobotHub(object):
         debug("get_ir_body_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            return  (0, "OK", self._ir_temp.get_obj_temp())
+            return {OK: 0, DATA: self._ir_temp.get_obj_temp()}
         else:
-            return (-1,'error','device init error')   
+            return {OK: -1, DATA: 'error:device init error'}
 
     def get_ir_amb_temp(self):
         debug("get_ir_amb_temp ")
         self._init_ir_temp()
         if self._ir_temp_init:
-            return (0, "OK",  self._ir_temp.get_amb_temp())
+            return {OK: 0,  DATA: self._ir_temp.get_amb_temp()}
         else:
-            return (-1,'error','device init error')  
+            return {OK: -1, DATA: 'error: device init error'}
 
     def _init__body_dist(self):
         debug("_init_food_weight ")
@@ -152,14 +175,15 @@ class FeedRobotHub(object):
                 self._body_dist_init = True
             except:
                 error(traceback.print_exc())
+
     def get_body_dist(self):
         debug("get_food_weight ")
         self._init__body_dist()
         if self._body_dist_init:
             value = self._body_dist.get_distance()
-            return  (0, "OK", value)
+            return {OK: 0,  DATA: value}
         else:
-            return  (-1,'error','device init error')   
+            return {OK: -1, DATA: 'error: device init error'}
     
     def edgeCallback(self, data, value):
         info('edgeCallback data {}, value {}'.format(data, value))
@@ -173,6 +197,7 @@ class FeedRobotHub(object):
             self.gpio.setCallback(pin, self.edgeCallback, pin)
             
     def init_gpio(self):
+        
         debug("_init_gpio ")
         if not self._gpio_init:
             self.gpio = NativeGPIO()
@@ -218,9 +243,9 @@ class FeedRobotHub(object):
         return cond_status
 
 
-    def get_body_status(self):
+    def get_health_status(self):
         debug("get_body_status")
-        body_status = BodyStatus()
+        body_status = HealthStatus()
         body_status.body_distance = self.get_body_dist()
         body_status.body_weight = self.get_body_weight()
         body_status.temperature = self.get_ir_body_temp()
@@ -229,25 +254,6 @@ class FeedRobotHub(object):
 
        
     
-class ConditionStatus(object):
-    def __init__(self):
-        self.temperature = 0
-        self.food_weight = 0
-    def __str__(self) -> str:
-        """Represent body as string."""
-        return ":temperature:{},food_weight:{}".format(self.temperature, self.food_weight)
-
-
-    
-
-class BodyStatus(object):
-    def __init__(self):
-        self.temperature = 0
-        self.body_weight = 0
-        self.body_distance= 0
-    def __str__(self) -> str:
-        """Represent body as string."""
-        return ":temperature:{}, body_weight:{},body_distance:{}".format(self.temperature, self.body_weight,self.body_distance )
 
 
 
@@ -257,10 +263,13 @@ class BodyStatus(object):
        
         
 if __name__ == "__main__":
+    import time
     setDebug()
-    frh=FeedRobotHub()
-    debug("body status{}".format(frh.get_condition_status()))
-    debug("body status{}".format(frh.get_body_status()))
+    frh = FeedRobotHub()
+    while True:
+        time.sleep(1.5)
+    # debug("body status{}".format(frh.get_condition_status()))
+    # debug("body status{}".format(frh.get_health_status()))
     # frh.get_body_status
     # debug("food weight {0} g".format(frh.get_food_weight()))
     # debug("body weight {0} g".format(frh.get_body_weight()))
@@ -268,7 +277,7 @@ if __name__ == "__main__":
     # debug("ir_amb_temp:{}C".format(frh.get_ir_amb_temp()))
     # debug("ir_body_temp:{}C".format(frh.get_ir_body_temp()))
 
-    # debug("get_body_dist:{} mm".format(frh.get_body_dist()))
+        debug("get_body_dist:{} mm".format(frh.get_body_dist()))
     # gpio_out_list = [CONF_DOOR_ENTER_SWITCH_GPIO,CONF_DOOR_EXIT_SWITCH_GPIO,
     # CONF_BUCKET_FORWARD_GPIO,CONF_BUCKET_REVERSE_GPIO]
 
@@ -278,6 +287,8 @@ if __name__ == "__main__":
     # for gpio in gpio_status_list:
     #     info(gpio)    
     # frh.init_gpio()
+
     # debug(":digitalWrite {}".format(frh.digitalWrite(27,0)))
+
    
  

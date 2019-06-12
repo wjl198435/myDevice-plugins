@@ -1,0 +1,6 @@
+sudo systemctl daemon-reload
+sudo systemctl enable feedrobot.service --now
+sudo systemctl daemon-reload
+
+
+sudo journalctl -u ssh.service --since today

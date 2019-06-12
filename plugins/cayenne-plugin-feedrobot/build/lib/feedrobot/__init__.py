@@ -13,6 +13,8 @@ from feedrobot.weightsensors.weight import (FoodWeightClass,HeadWeightClass,Tail
 from feedrobot.manager import connect_client
 from feedrobot.tempsensors.mlx90614 import MLX90614
 from feedrobot.distancesensors.gp2y0e03 import GP2Y0E03
+from feedrobot.feedrobothub import FeedRobotHub
+
 class FeedRobot(object):
     
     def __init__(self):

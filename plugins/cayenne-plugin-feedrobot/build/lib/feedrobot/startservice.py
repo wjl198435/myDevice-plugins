@@ -7,5 +7,5 @@ from myDevices.utils.logger import error, debug,info,setInfo,setDebug
 from feedrobot.manager import start_server
 
 if __name__ == "__main__":
-    setDebug()
+#    setDebug()
     start_server(True)

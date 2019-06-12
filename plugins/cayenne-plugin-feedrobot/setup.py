@@ -27,8 +27,9 @@ try:
 except FileExistsError:
     pass
 
-setup(name             = 'feedrobot',
-      version          = '0.1.16',
+setup(
+      name             = 'feedrobot',
+      version          = '0.1.20',
       author           = 'wangjinliang',
       author_email     = 'N/A',
       description      = 'myDevices Cayenne Feed Robot plugin',

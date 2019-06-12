@@ -7,7 +7,7 @@ from myDevices.utils.logger import error, debug,info,setInfo,setDebug
 
 from myDevices.system.hardware import Hardware, BOARD_REVISION, CPU_REVISION, CPU_HARDWARE 
 from feedrobot.demo import MathsClass
-from feedrobothub import FeedRobotHub
+from feedrobot.feedrobothub import (FeedRobotHub,HealthStatus,ConditionStatus)
 from myDevices.system.systeminfo import SystemInfo
 
 SERVER_ADDRESS = ('0.0.0.0', 5600)
@@ -27,6 +27,8 @@ def start_server(emulate=False):
     # ('Maths', MathsClass)
     debug('start_server')
     FeedRobotManager.register('Maths', MathsClass)
+    FeedRobotManager.register('ConditionStatus', ConditionStatus)
+    FeedRobotManager.register('HealthStatus', HealthStatus)
     FeedRobotManager.register('FeedRobotHub', FeedRobotHub)
     FeedRobotManager.register('Hardware', Hardware)
     FeedRobotManager.register('SystemInfo', SystemInfo)
@@ -39,6 +41,8 @@ def connect_client():
     try:
         debug('Connecting to feedrobot service')
         FeedRobotManager.register('Maths', MathsClass)
+        FeedRobotManager.register('ConditionStatus', ConditionStatus)
+        FeedRobotManager.register('HealthStatus', HealthStatus)
         FeedRobotManager.register('FeedRobotHub',FeedRobotHub)
         FeedRobotManager.register('Hardware', Hardware)
         FeedRobotManager.register('SystemInfo', SystemInfo)
@@ -49,7 +53,7 @@ def connect_client():
         error('Error connecting to feedrobot service, if using the Sense HAT emulator make sure it is has been launched in the GUI')
 
 if __name__ == "__main__":
-    setDebug()
+#    setDebug()
     manager = connect_client()
     # manager.FeedRobotHub.digitalWrite(26,0)
     # print(manager.Maths().get_value())
@@ -68,6 +72,11 @@ if __name__ == "__main__":
     sysInfo = {item['channel']:item for item in systemInfo.getSystemInformation()}
     info(sysInfo)
     # debug("Sensor body weight:{}".format(hardware.getMac()))
+    feedrobot = manager.FeedRobotHub()
+
+    debug(feedrobot.get_condition_status())
+
+    debug(feedrobot.get_health_status())
     
     # feed_robot.get_ir_body_temp()
     # debug(feed_robot.get_ir_body_temp())
