@@ -7,4 +7,6 @@ ExecStart=/usr/bin/python3 -m feedrobot.startservice
 Restart=always
 
 [Install]
-WantedBy=myDevices.service
+#WantedBy=myDevices.service
+WantedBy=multi-user.target
+
