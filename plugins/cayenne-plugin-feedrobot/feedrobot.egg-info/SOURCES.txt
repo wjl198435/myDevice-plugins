@@ -1,3 +1,4 @@
+README.md
 setup.py
 data/feedrobot.service
 feedrobot/__init__.py

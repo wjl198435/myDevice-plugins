@@ -45,7 +45,8 @@ setup(
                         #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Tail.swp']),
                         #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/NA4-350kg-Head.swp']),
                         #   ('/etc/myDevices/plugins/cayenne-plugin-feedrobot/data', ['data/5kg-food.swp']),
-                            ('/lib/systemd/system', ['data/feedrobot.service'])]
+                        #    ('/etc/systemd/system', ['data/feedrobot.service'])
+                         ]
       )
 
 subprocess.call(['systemctl', 'daemon-reload'])
